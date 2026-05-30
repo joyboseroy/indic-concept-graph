@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    ports:
+      - "6380:6379"
+    volumes:
+      - falkordb_data:/data
+
+volumes:
+  falkordb_data:

@@ -1,0 +1,8 @@
+falkordb
+redis
+python-dotenv
+transformers
+torch
+sentencepiece
+sacremoses
+# IndicTransToolkit installed separately - see README
