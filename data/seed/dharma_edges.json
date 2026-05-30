@@ -1,0 +1,197 @@
+[
+  {
+    "source": "Impermanence",
+    "target": "Three Marks of Existence"
+  },
+  {
+    "source": "Suffering",
+    "target": "Three Marks of Existence"
+  },
+  {
+    "source": "Non-self",
+    "target": "Three Marks of Existence"
+  },
+  {
+    "source": "Three Marks of Existence",
+    "target": "Four Noble Truths"
+  },
+  {
+    "source": "Karma",
+    "target": "Four Noble Truths"
+  },
+  {
+    "source": "Rebirth",
+    "target": "Four Noble Truths"
+  },
+  {
+    "source": "Four Noble Truths",
+    "target": "Noble Eightfold Path"
+  },
+  {
+    "source": "Three Marks of Existence",
+    "target": "Dependent Origination"
+  },
+  {
+    "source": "Dependent Origination",
+    "target": "Karma"
+  },
+  {
+    "source": "Karma",
+    "target": "Rebirth"
+  },
+  {
+    "source": "Dependent Origination",
+    "target": "Nirvana"
+  },
+  {
+    "source": "Noble Eightfold Path",
+    "target": "Nirvana"
+  },
+  {
+    "source": "Three Jewels",
+    "target": "Refuge"
+  },
+  {
+    "source": "Refuge",
+    "target": "Four Noble Truths"
+  },
+  {
+    "source": "Mindfulness",
+    "target": "Noble Eightfold Path",
+    "rel": "RELATED_TO"
+  },
+  {
+    "source": "Mindfulness",
+    "target": "Samadhi"
+  },
+  {
+    "source": "Samadhi",
+    "target": "Prajna"
+  },
+  {
+    "source": "Prajna",
+    "target": "Emptiness"
+  },
+  {
+    "source": "Five Aggregates",
+    "target": "Non-self"
+  },
+  {
+    "source": "Five Aggregates",
+    "target": "Dependent Origination",
+    "rel": "RELATED_TO"
+  },
+  {
+    "source": "Four Noble Truths",
+    "target": "Bodhicitta"
+  },
+  {
+    "source": "Emptiness",
+    "target": "Two Truths"
+  },
+  {
+    "source": "Dependent Origination",
+    "target": "Two Truths",
+    "rel": "RELATED_TO"
+  },
+  {
+    "source": "Bodhicitta",
+    "target": "Six Perfections"
+  },
+  {
+    "source": "Bodhicitta",
+    "target": "Bodhisattva"
+  },
+  {
+    "source": "Six Perfections",
+    "target": "Bodhisattva"
+  },
+  {
+    "source": "Emptiness",
+    "target": "Buddha Nature"
+  },
+  {
+    "source": "Two Truths",
+    "target": "Buddha Nature",
+    "rel": "RELATED_TO"
+  },
+  {
+    "source": "Buddha Nature",
+    "target": "Rigpa"
+  },
+  {
+    "source": "Buddha Nature",
+    "target": "Dzogchen"
+  },
+  {
+    "source": "Emptiness",
+    "target": "Mahamudra"
+  },
+  {
+    "source": "Samadhi",
+    "target": "Mahamudra"
+  },
+  {
+    "source": "Refuge",
+    "target": "Ngondro"
+  },
+  {
+    "source": "Bodhicitta",
+    "target": "Ngondro"
+  },
+  {
+    "source": "Ngondro",
+    "target": "Guru Yoga"
+  },
+  {
+    "source": "Guru Yoga",
+    "target": "Dzogchen"
+  },
+  {
+    "source": "Ngondro",
+    "target": "Tantra"
+  },
+  {
+    "source": "Tantra",
+    "target": "Dzogchen"
+  },
+  {
+    "source": "Tantra",
+    "target": "Mahamudra"
+  },
+  {
+    "source": "Rigpa",
+    "target": "Dzogchen"
+  },
+  {
+    "source": "Three Jewels",
+    "target": "Nembutsu",
+    "rel": "RELATED_TO"
+  },
+  {
+    "source": "Nembutsu",
+    "target": "Pure Land"
+  },
+  {
+    "source": "Refuge",
+    "target": "Nembutsu"
+  },
+  {
+    "source": "Nembutsu",
+    "target": "Shinjin"
+  },
+  {
+    "source": "Four Noble Truths",
+    "target": "Shinjin",
+    "rel": "RELATED_TO"
+  },
+  {
+    "source": "Guru Yoga",
+    "target": "Rigpa"
+  },
+  {
+    "source": "Samadhi",
+    "target": "Rigpa",
+    "rel": "RELATED_TO"
+  }
+]

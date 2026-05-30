@@ -1,0 +1,43 @@
+[
+  {"source": "Basic Arithmetic", "target": "Fractions"},
+  {"source": "Basic Arithmetic", "target": "Integers"},
+  {"source": "Fractions", "target": "Ratio and Proportion"},
+  {"source": "Integers", "target": "Algebra Basics"},
+  {"source": "Algebra Basics", "target": "Linear Equations"},
+  {"source": "Linear Equations", "target": "Quadratic Equations"},
+  {"source": "Basic Arithmetic", "target": "Pythagoras Theorem"},
+  {"source": "Pythagoras Theorem", "target": "Trigonometry"},
+  {"source": "Algebra Basics", "target": "Coordinate Geometry"},
+  {"source": "Pythagoras Theorem", "target": "Coordinate Geometry"},
+  {"source": "Trigonometry", "target": "Coordinate Geometry", "rel": "RELATED_TO"},
+
+  {"source": "Motion", "target": "Velocity and Acceleration"},
+  {"source": "Force", "target": "Newton's First Law"},
+  {"source": "Velocity and Acceleration", "target": "Newton's First Law"},
+  {"source": "Newton's First Law", "target": "Newton's Second Law"},
+  {"source": "Newton's Second Law", "target": "Newton's Third Law"},
+  {"source": "Mass and Weight", "target": "Gravitation"},
+  {"source": "Newton's Second Law", "target": "Gravitation"},
+  {"source": "Force", "target": "Work Energy Theorem"},
+  {"source": "Motion", "target": "Kinetic Energy"},
+  {"source": "Work Energy Theorem", "target": "Kinetic Energy"},
+  {"source": "Gravitation", "target": "Potential Energy"},
+  {"source": "Kinetic Energy", "target": "Conservation of Energy"},
+  {"source": "Potential Energy", "target": "Conservation of Energy"},
+
+  {"source": "Electric Charge", "target": "Electric Current"},
+  {"source": "Electric Current", "target": "Ohm's Law"},
+  {"source": "Ohm's Law", "target": "Resistance"},
+  {"source": "Electric Current", "target": "Magnetic Field"},
+  {"source": "Magnetic Field", "target": "Electromagnetic Induction"},
+
+  {"source": "Atoms and Molecules", "target": "Chemical Reactions"},
+  {"source": "Atoms and Molecules", "target": "Acids Bases and Salts"},
+  {"source": "Atoms and Molecules", "target": "Periodic Table"},
+  {"source": "Chemical Reactions", "target": "Acids Bases and Salts"},
+
+  {"source": "Cell Structure", "target": "Photosynthesis"},
+  {"source": "Cell Structure", "target": "Respiration"},
+  {"source": "Cell Structure", "target": "Heredity and Evolution"},
+  {"source": "Photosynthesis", "target": "Respiration", "rel": "RELATED_TO"}
+]
