@@ -1,64 +1,254 @@
 # indic-concept-graph
 
-Multilingual concept prerequisite lookup across Indian school curriculum (NCERT) and Buddhist dharma terminology.
+A multilingual concept prerequisite graph for two domains:
 
-Given a concept name in **any Indian language** — or in Sanskrit, Tibetan, Pali, or Chinese — returns its prerequisites and related concepts from a FalkorDB knowledge graph.
+- **NCERT** — Indian school curriculum (Grades 6-10), Physics, Chemistry, Mathematics, Biology
+- **Dharma** — Buddhist terminology across Sanskrit, Tibetan, Pali, Chinese, Tamil, Hindi
 
-```bash
-# What do I need to know before Newton's Second Law? (in Hindi)
-python -m src.lookup --query "न्यूटन का दूसरा नियम" --graph ncert
+Given a concept name in any Indian language — or in Sanskrit, Tibetan, Wylie romanization, Pali, or Chinese — returns its prerequisites, dependents, or shortest learning path from a FalkorDB knowledge graph.
 
-# What must I understand before Dzogchen? (in Tibetan)
-python -m src.lookup --query "rdzogs pa chen po" --lang tibetan --graph dharma
+Built on [IndicTrans2 (AI4Bharat)](https://github.com/AI4Bharat/IndicTrans2) for 22 Indian languages and Ollama for classical languages.
 
-# What concepts open up after understanding Emptiness?
-python -m src.lookup --query "śūnyatā" --lang sanskrit --graph dharma --mode dependents
+---
+
+## Examples
+
+### NCERT — English
+
 ```
+$ python3 -m src.lookup --query "Trigonometry" --graph ncert
+
+Query      : Trigonometry
+Matched    : Trigonometry (en: Trigonometry)
+Mode       : prerequisites
+Language   : eng_Latn
+
+Prerequisites (2):
+   1. Pythagoras Theorem  [Mathematics | Grade 9]
+   2. Basic Arithmetic    [Mathematics | Grade 6]
+```
+
+### NCERT — Hindi (Devanagari)
+
+```
+$ python3 -m src.lookup --query "त्रिकोणमिति" --graph ncert
+
+Query      : त्रिकोणमिति
+Matched    : त्रिकोणमिति (en: Trigonometry)
+Mode       : prerequisites
+Language   : hin_Deva
+
+Prerequisites (2):
+   1. पाइथागोरस प्रमेय  [Mathematics | Grade 9]
+   2. बुनियादी अंकगणित  [Mathematics | Grade 6]
+```
+
+### NCERT — What does mastering Integers unlock?
+
+```
+$ python3 -m src.lookup --query "Integers" --graph ncert --mode dependents
+
+Query      : Integers
+Matched    : Integers (en: Integers)
+Mode       : dependents
+Language   : eng_Latn
+
+Dependents (1):
+   1. Algebra Basics  [Mathematics | Grade 7]
+```
+
+### NCERT — Learning path
+
+```
+$ python3 -m src.lookup --query "Fractions" --graph ncert --mode path --to "Quadratic Equations"
+
+Query      : Fractions
+Matched    : Fractions (en: Fractions)
+Mode       : path
+Language   : eng_Latn
+
+Path (4):
+   1. Fractions
+   2. Ratio and Proportion
+   3. ... (via Algebra Basics, Linear Equations)
+   4. Quadratic Equations
+```
+
+---
+
+### Dharma — Prerequisites for Dzogchen
+
+```
+$ python3 -m src.lookup --query "Dzogchen" --graph dharma
+
+Query      : Dzogchen
+Matched    : Dzogchen (en: Dzogchen)
+Mode       : prerequisites
+Language   : eng_Latn
+
+Prerequisites (9):
+   1. Refuge          [Dharma | All]
+   2. Bodhicitta      [Dharma | Mahayana/Vajrayana]
+   3. Ngondro         [Tantra | Vajrayana]
+   4. Guru Yoga       [Tantra | Vajrayana]
+   5. Tantra          [Tantra | Vajrayana]
+   6. Buddha Nature   [Dharma | Mahayana/Vajrayana]
+   7. Emptiness       [Madhyamaka | Mahayana/Vajrayana]
+   8. Prajna          [Dharma | All]
+   9. Rigpa           [Dzogchen | Nyingma/Vajrayana]
+```
+
+### Dharma — Path from Refuge to Rigpa (Nyingma sequence)
+
+```
+$ python3 -m src.lookup --query "Refuge" --graph dharma --mode path --to "Rigpa"
+
+Query      : Refuge
+Matched    : Refuge (en: Refuge)
+Mode       : path
+Language   : eng_Latn
+
+Path (4):
+   1. Refuge     [Dharma | All]
+   2. Ngondro    [Tantra | Vajrayana]
+   3. Guru Yoga  [Tantra | Vajrayana]
+   4. Rigpa      [Dzogchen | Nyingma/Vajrayana]
+```
+
+### Dharma — What does understanding Emptiness unlock?
+
+```
+$ python3 -m src.lookup --query "Emptiness" --graph dharma --mode dependents
+
+Query      : Emptiness
+Matched    : Emptiness (en: Emptiness)
+Mode       : dependents
+Language   : eng_Latn
+
+Dependents (5):
+   1. Buddha Nature  [Dharma | Mahayana/Vajrayana]
+   2. Rigpa          [Dzogchen | Nyingma/Vajrayana]
+   3. Dzogchen       [Dzogchen | Nyingma]
+   4. Mahamudra      [Tantra | Kagyu/Vajrayana]
+   5. Two Truths     [Madhyamaka | Mahayana]
+```
+
+### Dharma — Prerequisites for Nirvana (Theravada path)
+
+```
+$ python3 -m src.lookup --query "Nirvana" --graph dharma
+
+Query      : Nirvana
+Matched    : Nirvana (en: Nirvana)
+Mode       : prerequisites
+Language   : eng_Latn
+
+Prerequisites (10):
+   1. Impermanence           [Dharma | All]
+   2. Suffering              [Dharma | All]
+   3. Non-self               [Dharma | All]
+   4. Three Marks of Existence [Dharma | All]
+   5. Dependent Origination  [Dharma | All]
+   6. Karma                  [Dharma | All]
+   7. Rebirth                [Dharma | All]
+   8. Four Noble Truths      [Dharma | All]
+   9. Noble Eightfold Path   [Dharma | All]
+  10. Refuge                 [Dharma | All]
+```
+
+### Dharma — Tibetan Wylie romanization query (via Ollama)
+
+```
+$ python3 -m src.lookup --query "rdzogs pa chen po" --lang tibetan --graph dharma
+
+Query      : rdzogs pa chen po
+Matched    : Dzogchen (en: Dzogchen)
+Mode       : prerequisites
+Language   : tibetan
+
+Prerequisites (9):
+   [prerequisites returned translated to Tibetan via Ollama]
+```
+
+### Dharma — Sanskrit query
+
+```
+$ python3 -m src.lookup --query "śūnyatā" --lang sanskrit --graph dharma
+
+Query      : śūnyatā
+Matched    : Emptiness (en: Emptiness)
+Mode       : prerequisites
+Language   : sanskrit
+```
+
+### Dharma — Chinese query
+
+```
+$ python3 -m src.lookup --query "菩提心" --lang chinese --graph dharma
+
+Query      : 菩提心
+Matched    : Bodhicitta (en: Bodhicitta)
+Mode       : prerequisites
+Language   : chinese
+```
+
+---
 
 ## Architecture
 
 ```
-User query (any language)
-    │
-    ▼
-Language detection / normalisation
-    │
-    ├─ Indic scripts (Hindi, Tamil, Telugu, Bengali, ...)
-    │      └─ IndicTrans2 (AI4Bharat) → English
-    │
-    └─ Classical langs (Sanskrit, Tibetan, Pali, Chinese)
-           └─ Ollama LLM (qwen2.5) → English
-    │
-    ▼
-FalkorDB fuzzy concept match
-    │
-    ▼
-Cypher query: prerequisites / dependents / learning path
-    │
-    ▼
+User query (any language/script)
+        │
+        ├─ Indic scripts (Hindi, Tamil, Telugu, Bengali ...)
+        │       └─ IndicTrans2 (AI4Bharat) → English
+        │
+        └─ Classical (Sanskrit, Tibetan, Pali, Chinese)
+                └─ Ollama LLM (qwen2.5) → English
+        │
+        ▼
+FalkorDB: fuzzy match on all language fields
+        │
+        ▼
+Cypher query: prerequisites / dependents / BFS path
+        │
+        ▼
 Translate results back to source language
-    │
-    ▼
+        │
+        ▼
 Formatted output
 ```
 
-## Two Graphs
+---
 
-### `ncert` — Indian School Curriculum
-Concepts from NCERT textbooks, Grades 6-10, across Physics, Chemistry, Mathematics, Biology. All concept names stored in English, Hindi, Tamil, Telugu, Bengali.
+## Multilingual concept storage
 
-### `dharma` — Buddhist Terminology
-Core Buddhist concepts with cross-traditional multilingual names: Sanskrit, Tibetan (Wylie), Pali, Chinese (Traditional), Tamil, Hindi. Covers Theravada, Mahayana, Madhyamaka, Dzogchen, Tantra, Pure Land, Jodo Shinshu.
+Every concept node stores names across languages. Example for Emptiness:
 
-Prerequisite edges reflect doctrinal learning sequences — e.g. the Tibetan Ngöndro progression, the Theravada path stages, the Mahayana Bodhisattva path.
+| Field      | Value                        |
+|------------|------------------------------|
+| name_en    | Emptiness                    |
+| name_sa    | śūnyatā                      |
+| name_pi    | suññatā                      |
+| name_bo    | stong pa nyid                |
+| name_zh    | 空                            |
+| name_ta    | சூன்யதா                      |
+| name_hi    | शून्यता                      |
 
-## Supported Languages
+Queries in any of these languages or scripts match the same node.
+
+---
+
+## Supported languages
 
 **Indic (via IndicTrans2, AI4Bharat):**
-Hindi (`hin_Deva`), Bengali (`ben_Beng`), Tamil (`tam_Taml`), Telugu (`tel_Telu`), Kannada (`kan_Knda`), Malayalam (`mal_Mlym`), Marathi (`mar_Deva`), Gujarati (`guj_Gujr`), Punjabi (`pan_Guru`), Odia (`ory_Orya`), Assamese (`asm_Beng`), Urdu (`urd_Arab`)
+Hindi (`hin_Deva`), Bengali (`ben_Beng`), Tamil (`tam_Taml`), Telugu (`tel_Telu`),
+Kannada (`kan_Knda`), Malayalam (`mal_Mlym`), Marathi (`mar_Deva`), Gujarati (`guj_Gujr`),
+Punjabi (`pan_Guru`), Odia (`ory_Orya`), Assamese (`asm_Beng`), Urdu (`urd_Arab`)
 
 **Classical (via Ollama LLM):**
-Sanskrit, Tibetan (Wylie romanization), Pali, Chinese
+Sanskrit, Tibetan (Wylie romanization), Pali, Chinese (Traditional/Simplified)
+
+---
 
 ## Setup
 
@@ -66,85 +256,71 @@ Sanskrit, Tibetan (Wylie romanization), Pali, Chinese
 # 1. Start FalkorDB
 docker-compose up -d
 
-# 2. Install Python dependencies
-pip install -r requirements.txt
+# 2. Install dependencies
+pip install -r requirements.txt --break-system-packages
 
-# 3. Install IndicTransToolkit (required for IndicTrans2)
-pip install git+https://github.com/AI4Bharat/IndicTransToolkit.git
-
-# 4. Pull Ollama model (for Sanskrit/Tibetan/Pali/Chinese queries)
-ollama pull qwen2.5:7b
-
-# 5. Copy and edit environment config
+# 3. Copy environment config
 cp .env.example .env
 
-# 6. Load seed data
-python -m src.load_ncert_seed
-python -m src.load_dharma_seed
+# 4. Load seed data
+python3 -m src.load_ncert_seed
+python3 -m src.load_dharma_seed
+
+# 5. Pull Ollama model (for Sanskrit/Tibetan/Pali/Chinese queries)
+ollama pull qwen2.5:7b
 ```
 
-## Usage
+IndicTrans2 models download automatically on first use (~900MB, one-time).
 
-### CLI
+---
+
+## CLI reference
 
 ```bash
-# NCERT: prerequisites for a concept in Hindi
-python -m src.lookup --query "त्रिकोणमिति" --graph ncert
-
-# NCERT: what can I learn after mastering Integers?
-python -m src.lookup --query "Integers" --graph ncert --mode dependents
-
-# NCERT: learning path from Fractions to Quadratic Equations
-python -m src.lookup --query "Fractions" --graph ncert --mode path --to "Quadratic Equations"
-
-# Dharma: prerequisites for Dzogchen in Tibetan
-python -m src.lookup --query "rdzogs pa chen po" --lang tibetan --graph dharma
-
-# Dharma: prerequisites for Emptiness in Sanskrit
-python -m src.lookup --query "śūnyatā" --lang sanskrit --graph dharma
-
-# Dharma: prerequisites for 菩提心 (Bodhicitta) in Chinese
-python -m src.lookup --query "菩提心" --lang chinese --graph dharma
-
-# Output as JSON
-python -m src.lookup --query "न्यूटन का पहला नियम" --graph ncert --json
+python3 -m src.lookup --query QUERY
+                      --graph {ncert,dharma}
+                      --lang  LANG           # FLORES code or classical name
+                      --mode  {prerequisites,dependents,path}
+                      --to    TARGET_CONCEPT  # for path mode
+                      --depth N              # traversal depth (default 3)
+                      --json                 # raw JSON output
 ```
 
-### Python API
+---
 
-```python
-from src.lookup import lookup
+## Extending the seed data
 
-# NCERT lookup in Tamil
-result = lookup("த்ரிகோணமிதி", graph_name="ncert")
-for concept in result["results"]:
-    print(concept["name_translated"], "→", concept["name_en"])
+Add concepts to `data/seed/dharma_concepts.json` or `data/seed/ncert_concepts.json`
+and edges to the corresponding `*_edges.json`. Then reload:
 
-# Dharma lookup
-result = lookup("rigpa", graph_name="dharma", src_lang="tibetan")
-print(result["matched_concept"])
-print(result["results"])
+```bash
+python3 -m src.load_dharma_seed
 ```
 
-### Adding Concepts
+The loader uses `MERGE` so existing nodes are updated, not duplicated.
 
-Edit `data/seed/ncert_concepts.json` or `data/seed/dharma_concepts.json` and rerun the loader. The `upsert_concept` and `upsert_edge` functions in `src/graph.py` are also callable directly.
+Planned additions to the dharma graph:
+- Sixteen insight knowledges (Theravada vipassana sequence)
+- Four Ngondro practices individually with sequence edges
+- Longchenpa's four visions (thögal progression)
+- Five Buddha families
+- Bardo stages
+
+---
 
 ## Acknowledgements
 
 - [AI4Bharat / IndicTrans2](https://github.com/AI4Bharat/IndicTrans2) — translation models for 22 Indian languages
 - [FalkorDB](https://www.falkordb.com/) — graph database
-- NCERT textbooks (freely available at ncert.nic.in) — curriculum source
-- Dharma seed data informed by Nyingma, Theravada, Mahayana, and Pure Land canonical sources
+- NCERT textbooks (freely available at ncert.nic.in)
+- Dharma seed data informed by Nyingma, Theravada, Mahayana, Madhyamaka, and Pure Land canonical sources
 
 ## Citation
-
-If you use this in research:
 
 ```bibtex
 @software{indic_concept_graph_2026,
   author = {Bose, Joy},
-  title  = {indic-concept-graph: Multilingual Concept Prerequisite Lookup for NCERT Curriculum and Buddhist Dharma Terminology},
+  title  = {indic-concept-graph: Multilingual Concept Prerequisite Graph for NCERT Curriculum and Buddhist Dharma Terminology},
   year   = {2026},
   url    = {https://github.com/joyboseroy/indic-concept-graph}
 }
@@ -153,4 +329,3 @@ If you use this in research:
 ## License
 
 MIT
-
